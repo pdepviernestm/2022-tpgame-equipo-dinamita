@@ -139,12 +139,13 @@ object juego {
 		game.addVisual(borde123)
 		game.addVisual(borde124)
 		game.addVisual(borde125)
-			// personajes
-		game.addVisualCharacter(tank)
-		game.addVisual(tank2)
+		
+		game.addVisual(inicio)
 	}
 
 	method configurarTeclas() {
+		
+		keyboard.i().onPressDo({ self.iniciar() })
 		// TECLAS DE DIRECCION
 		keyboard.up().onPressDo({ tank.imagen("tankup_verde.png")})
 		keyboard.down().onPressDo({ tank.imagen("tankdown_verde.png")})
@@ -166,14 +167,29 @@ object juego {
 		keyboard.enter().onPressDo({ tank.disparo()})
 		keyboard.space().onPressDo({ tank2.disparo()})
 	}
+	
+	method iniciar() {
+		game.removeVisual(inicio)
+		game.addVisualCharacter(tank)
+		game.addVisual(tank2)
+	}
+	
+	method reiniciar() {
+		tank.position(game.origin())
+		tank2.position(game.origin())
+		tank.imagen("tankup_verde.png")
+		tank2.imagen("tankup_red.png")
+	}
 
 	method ganoP1() {
 		game.addVisual(ganador1)
 		tank2.imagen("explosion.gif") 
+		self.reiniciar()
 	}
 	method ganoP2() {
 		game.addVisual(ganador2)
-		tank.imagen("explosion.gif") 
+		tank.imagen("explosion.gif")
+		self.reiniciar()
 	}
 	
 
@@ -184,7 +200,6 @@ object ganador1 {
 	method position() = game.center()
 
 	method text() = "Gano el jugador 1"
-
 }
 
 object ganador2 {
@@ -192,7 +207,12 @@ object ganador2 {
 	method position() = game.center()
 
 	method text() = "Gano el jugador 2"
+}
 
+object inicio {
+	method position() = game.center()
+	
+	method text() = "Toca I para comenzar la partida"
 }
 
 object tank {
