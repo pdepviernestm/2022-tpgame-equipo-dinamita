@@ -3,7 +3,7 @@ import tankarena.*
 
 program tankarena {
 	juego.configurar()
-	juego.iniciarTablero()
+	juego.iniciarMapa()
 	juego.configurarTeclas()
 	game.start()
 }
