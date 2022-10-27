@@ -184,8 +184,7 @@ object juego {
 	method ganoP1() {
 		game.addVisual(ganador1)
 		game.schedule(2000, {game.removeVisual(ganador1)})
-		game.addVisual(ganador1)
-		tank2.imagen("explosion.gif") 
+		tank2.imagen("explosion.gif")
 		self.reiniciar()
 	}
 	method ganoP2() {
@@ -222,30 +221,38 @@ object tank {
 
 	var property imagen = "tankup_verde.png"
 	var property position = game.origin()
+	var cooldown = false
 	
 	method image() = imagen
 
 	method disparo() {
-		const bala = new Municion()
-		game.addVisual(bala)
-		if (imagen == "tankup.png") {
-			bala.goup()
-			game.onTick(100, "trayecto", { bala.goup()})
-		} else if (imagen == "tankdown_verde.png") {
-			bala.godown()
-			game.onTick(100, "trayecto", { bala.godown()})
-		} else if (imagen == "tankright_verde.png") {
-			bala.goright()
-			game.onTick(100, "trayecto", { bala.goright()})
-		} else {
-			bala.goleft()
-			game.onTick(100, "trayecto", { bala.goleft()})
+		
+		
+		if(cooldown == false) {
+			cooldown = true
+			game.schedule(1000, {cooldown = false})
+			const bala = new Municion()
+			game.addVisual(bala)
+			if (imagen == "tankup_verde.png") {
+				bala.goup()
+				game.onTick(100, "trayecto", { bala.goup()})
+			} else if (imagen == "tankdown_verde.png") {
+				bala.godown()
+				game.onTick(100, "trayecto", { bala.godown()})
+			} else if (imagen == "tankright_verde.png") {
+				bala.goright()
+				game.onTick(100, "trayecto", { bala.goright()})
+			} else {
+				bala.goleft()
+				game.onTick(100, "trayecto", { bala.goleft()})
+			}
+			game.whenCollideDo(bala, { elemento =>
+				game.removeTickEvent("trayecto")
+				game.removeVisual(bala)
+				juego.ganoP1()
+			})
 		}
-		game.whenCollideDo(bala, { elemento =>
-			game.removeTickEvent("trayecto")
-			game.removeVisual(bala)
-			juego.ganoP1()
-		})
+		
 	}
 
 }
@@ -254,6 +261,7 @@ object tank2 {
 
 	var property imagen = "tankup_red.png"
 	var property position = game.origin()
+	var cooldown = false
 	
 	method image() = imagen
 
@@ -274,26 +282,32 @@ object tank2 {
 	}
 
 	method disparo() {
-		const bala2 = new Municion2()
-		game.addVisual(bala2)
-		if (imagen == "tankup_red.png") {
-			bala2.goup()
-			game.onTick(100, "trayecto2", { bala2.goup()})
-		} else if (imagen == "tankdown_red.png") {
-			bala2.godown()
-			game.onTick(100, "trayecto2", { bala2.godown()})
-		} else if (imagen == "tankright_red.png") {
-			bala2.goright()
-			game.onTick(100, "trayecto2", { bala2.goright()})
-		} else {
-			bala2.goleft()
-			game.onTick(100, "trayecto2", { bala2.goleft()})
+		
+		
+		if(cooldown == false) {
+			cooldown = true
+			game.schedule(1000, {cooldown = false})
+			const bala2 = new Municion2()
+			game.addVisual(bala2)
+			if (imagen == "tankup_red.png") {
+				bala2.goup()
+				game.onTick(100, "trayecto2", { bala2.goup()})
+			} else if (imagen == "tankdown_red.png") {
+				bala2.godown()
+				game.onTick(100, "trayecto2", { bala2.godown()})
+			} else if (imagen == "tankright_red.png") {
+				bala2.goright()
+				game.onTick(100, "trayecto2", { bala2.goright()})
+			} else {
+				bala2.goleft()
+				game.onTick(100, "trayecto2", { bala2.goleft()})
+			}
+			game.whenCollideDo(bala2, { elemento =>
+				game.removeTickEvent("trayecto2")
+				game.removeVisual(bala2)
+				juego.ganoP2()
+			})
 		}
-		game.whenCollideDo(bala2, { elemento =>
-			game.removeTickEvent("trayecto2")
-			game.removeVisual(bala2)
-			juego.ganoP2()
-		})
 	}
 
 }
