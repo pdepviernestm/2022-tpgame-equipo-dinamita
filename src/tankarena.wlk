@@ -183,11 +183,14 @@ object juego {
 
 	method ganoP1() {
 		game.addVisual(ganador1)
+		game.schedule(2000, {game.removeVisual(ganador1)})
+		game.addVisual(ganador1)
 		tank2.imagen("explosion.gif") 
 		self.reiniciar()
 	}
 	method ganoP2() {
 		game.addVisual(ganador2)
+		game.schedule(2000, {game.removeVisual(ganador2)})
 		tank.imagen("explosion.gif")
 		self.reiniciar()
 	}
