@@ -1,5 +1,14 @@
 import wollok.game.*
-import mapa.*
+
+class Borde{
+	
+	var property position
+	method image() = "wall.png"
+	
+	method colision(){
+		
+	}
+}
 
 object juego {
 
@@ -13,6 +22,25 @@ object juego {
 
 	method iniciarMapa() {
 		// TABLERO
+		
+		23.times({i=> 
+			const borde = new Borde(position = game.at(0, i-1))
+			game.addVisual(borde)		
+		})
+		23.times({i=> 
+			const borde = new Borde(position = game.at(38, i-1))
+			game.addVisual(borde)		
+		})		
+		39.times({i=> 
+			const borde = new Borde(position = game.at(i-1, 0))
+			game.addVisual(borde)		
+		})	
+		39.times({i=> 
+			const borde = new Borde(position = game.at(i-1, 21))
+			game.addVisual(borde)		
+		})		
+		/*
+		
 		game.addVisual(borde0)
 		
 		game.addVisual(borde1)
@@ -140,6 +168,9 @@ object juego {
 		game.addVisual(borde123)
 		game.addVisual(borde124)
 		game.addVisual(borde125)
+		
+		*/ 
+		 
 		
 		game.addVisual(inicio)
 	}
