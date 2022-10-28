@@ -39,139 +39,7 @@ object juego {
 			const borde = new Borde(position = game.at(i-1, 21))
 			game.addVisual(borde)		
 		})		
-		/*
-		
-		game.addVisual(borde0)
-		
-		game.addVisual(borde1)
-		game.addVisual(borde2)
-		game.addVisual(borde3)
-		game.addVisual(borde4)
-		game.addVisual(borde5)
-		game.addVisual(borde6)
-		game.addVisual(borde7)
-		game.addVisual(borde8)
-		game.addVisual(borde9)
-		game.addVisual(borde10)
-		game.addVisual(borde11)
-		game.addVisual(borde12)
-		game.addVisual(borde13)
-		game.addVisual(borde14)
-		game.addVisual(borde15)
-		game.addVisual(borde16)
-		game.addVisual(borde17)
-		game.addVisual(borde18)
-		game.addVisual(borde19)
-		game.addVisual(borde20)
-		game.addVisual(borde21)
-		game.addVisual(borde22)
-		game.addVisual(borde23)
-		game.addVisual(borde24)
-		game.addVisual(borde25)
-		game.addVisual(borde26)		
-		game.addVisual(borde27)
-		game.addVisual(borde28)
-		game.addVisual(borde29)
-		game.addVisual(borde30)
-		game.addVisual(borde31)
-		game.addVisual(borde32)
-		game.addVisual(borde33)
-		game.addVisual(borde34)
-		game.addVisual(borde35)
-		game.addVisual(borde36)
-		game.addVisual(borde37)
-		game.addVisual(borde38)
-		game.addVisual(borde39)
-		game.addVisual(borde40)
-		game.addVisual(borde41)
-		game.addVisual(borde42)
-		game.addVisual(borde43)
-		game.addVisual(borde44)
-		game.addVisual(borde45)
-		game.addVisual(borde46)
-		game.addVisual(borde47)
-		game.addVisual(borde48)
-		game.addVisual(borde49)
-		game.addVisual(borde50)
-		game.addVisual(borde51)
-		game.addVisual(borde52)
-		game.addVisual(borde53)
-		game.addVisual(borde54)
-		game.addVisual(borde55)
-		game.addVisual(borde56)
-		game.addVisual(borde57)
-		game.addVisual(borde58)
-		game.addVisual(borde59)
-		game.addVisual(borde60)
-		game.addVisual(borde61)
-		game.addVisual(borde62)
-		game.addVisual(borde63)
-		game.addVisual(borde64)
-		game.addVisual(borde65)
-		game.addVisual(borde66)
-		game.addVisual(borde67)
-		game.addVisual(borde68)
-		game.addVisual(borde69)
-		game.addVisual(borde70)
-		game.addVisual(borde71)
-		game.addVisual(borde72)
-		game.addVisual(borde73)
-		game.addVisual(borde74)
-		game.addVisual(borde75)
-		game.addVisual(borde76)
-		game.addVisual(borde77)
-		game.addVisual(borde78)
-		game.addVisual(borde79)
-		game.addVisual(borde80)
-		game.addVisual(borde81)
-		game.addVisual(borde82)
-		game.addVisual(borde83)
-		game.addVisual(borde84)
-		game.addVisual(borde85)
-		game.addVisual(borde86)
-		game.addVisual(borde87)
-		game.addVisual(borde88)
-		game.addVisual(borde89)
-		game.addVisual(borde90)
-		game.addVisual(borde91)
-		game.addVisual(borde92)
-		game.addVisual(borde93)
-		game.addVisual(borde94)
-		game.addVisual(borde95)
-		game.addVisual(borde96)
-		game.addVisual(borde97)
-		game.addVisual(borde98)
-		game.addVisual(borde99)
-		game.addVisual(borde100)
-		game.addVisual(borde101)
-		game.addVisual(borde102)
-		game.addVisual(borde103)
-		game.addVisual(borde104)
-		game.addVisual(borde105)
-		game.addVisual(borde106)
-		game.addVisual(borde107)
-		game.addVisual(borde108)
-		game.addVisual(borde109)
-		game.addVisual(borde110)
-		game.addVisual(borde111)
-		game.addVisual(borde112)
-		game.addVisual(borde113)
-		game.addVisual(borde114)
-		game.addVisual(borde115)
-		game.addVisual(borde116)
-		game.addVisual(borde117)
-		game.addVisual(borde118)
-		game.addVisual(borde119)
-		game.addVisual(borde120)
-		game.addVisual(borde121)
-		game.addVisual(borde122)
-		game.addVisual(borde123)
-		game.addVisual(borde124)
-		game.addVisual(borde125)
-		
-		*/ 
-		 
-		
+
 		game.addVisual(inicio)
 	}
 
@@ -204,6 +72,8 @@ object juego {
 		game.removeVisual(inicio)
 		game.addVisualCharacter(tank)
 		game.addVisual(tank2)
+		game.addVisual(contador1)
+		game.addVisual(contador2)
 	}
 	
 	method reiniciar() {
@@ -214,12 +84,14 @@ object juego {
 	}
 
 	method ganoP1() {
+		contador1.incrementar()
 		game.addVisual(ganador1)
 		game.schedule(2000, {game.removeVisual(ganador1)})
 		tank2.imagen("explosion.gif")
 		game.schedule(2000, {self.reiniciar()})
 	}
 	method ganoP2() {
+		contador2.incrementar()
 		game.addVisual(ganador2)
 		game.schedule(2000, {game.removeVisual(ganador2)})
 		tank.imagen("explosion.gif")
@@ -242,6 +114,58 @@ object ganador2 {
 
 	method text() = "Gano el jugador 2"
 }
+// Intente usar clases, pero me da problemas la variable "puntos" en text
+/*
+class Contador {
+	var property puntos = 0
+	var position
+	var text
+	var textColor
+	
+	method incrementar() { 
+		game.removeVisual(self)
+		puntos += 1
+		game.addVisual(self)
+	}
+}
+
+const contador1 = new Contador(
+	position = game.at(2,19), 
+	text = "Score P1 = " + self.puntos(),
+	textColor = paleta.verde()
+)
+*/
+
+object contador1 {
+	var puntos = 0
+	method incrementar() { 
+		game.removeVisual(self)
+		puntos += 1
+		game.addVisual(self)
+	}
+	
+	method position() = game.at(2,19)
+	method text() = "Score P1 = " + puntos
+	method textColor() = paleta.verde()
+}
+
+object contador2 {
+	var puntos = 0
+	method incrementar() { 
+		game.removeVisual(self)
+		puntos += 1
+		game.addVisual(self)
+	}
+	
+	method position() = game.at(35,19)
+	method text() = "Score P2 = " + puntos
+	method textColor() = paleta.rojo()
+}
+
+object paleta {
+	const property verde = "00FF00FF"
+	const property rojo = "FF0000FF"
+}
 
 object inicio {
 	method position() = game.center()
@@ -254,7 +178,7 @@ object tank {
 	var property imagen = "tankup_verde.png"
 	var property position = game.origin()
 	var cooldown = false
-	var balas = []
+	const balas = []
 	
 	method image() = imagen
 
@@ -280,22 +204,24 @@ object tank {
 				bala.goleft()
 				game.onTick(100, "trayecto", { bala.goleft()})
 			}
-			game.whenCollideDo(bala, { elemento =>
-				elemento.colision()
-				balas.forEach{bala => 
-					game.removeVisual(bala)
-					game.removeTickEvent("trayecto")
-				}
-				balas.clear()
-			})
+			game.whenCollideDo(bala, { elemento => elemento.colision()} )
 		}
 		
 	}
 	
 	method colision(){
+		self.eliminarBalas()
+		tank2.eliminarBalas()
 		juego.ganoP2()
 	}
-
+	
+	method eliminarBalas() {
+		if(not balas.isEmpty())
+		{
+			balas.forEach{bala => game.removeVisual(bala) }
+			balas.clear()
+		}
+	}
 }
 
 object tank2 {
@@ -303,7 +229,7 @@ object tank2 {
 	var property imagen = "tankup_red.png"
 	var property position = game.origin()
 	var cooldown = false
-	var balas = []
+	const balas = []
 	
 	method image() = imagen
 
@@ -345,19 +271,22 @@ object tank2 {
 				bala2.goleft()
 				game.onTick(100, "trayecto2", { bala2.goleft()})
 			}
-			game.whenCollideDo(bala2, { elemento =>
-				elemento.colision()
-				balas.forEach{bala => 
-					game.removeVisual(bala)
-					game.removeTickEvent("trayecto2")
-				}
-				balas.clear()
-			})
+			game.whenCollideDo(bala2, { elemento => elemento.colision()} )
 		}
 	}
 	
 	method colision(){
+		self.eliminarBalas()
+		tank.eliminarBalas()
 		juego.ganoP1()
+	}
+	
+	method eliminarBalas() {
+		if(not balas.isEmpty())
+		{
+			balas.forEach{bala => game.removeVisual(bala) }
+			balas.clear()
+		}
 	}
 
 }
@@ -385,4 +314,3 @@ class Municion {
 	}
 
 }
-
