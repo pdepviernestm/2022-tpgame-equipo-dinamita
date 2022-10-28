@@ -14,6 +14,7 @@ object juego {
 	method iniciarMapa() {
 		// TABLERO
 		game.addVisual(borde0)
+		
 		game.addVisual(borde1)
 		game.addVisual(borde2)
 		game.addVisual(borde3)
@@ -39,7 +40,7 @@ object juego {
 		game.addVisual(borde23)
 		game.addVisual(borde24)
 		game.addVisual(borde25)
-		game.addVisual(borde26)
+		game.addVisual(borde26)		
 		game.addVisual(borde27)
 		game.addVisual(borde28)
 		game.addVisual(borde29)
@@ -185,13 +186,13 @@ object juego {
 		game.addVisual(ganador1)
 		game.schedule(2000, {game.removeVisual(ganador1)})
 		tank2.imagen("explosion.gif")
-		self.reiniciar()
+		game.schedule(2000, {self.reiniciar()})
 	}
 	method ganoP2() {
 		game.addVisual(ganador2)
 		game.schedule(2000, {game.removeVisual(ganador2)})
 		tank.imagen("explosion.gif")
-		self.reiniciar()
+		game.schedule(2000, {self.reiniciar()})
 	}
 	
 
@@ -231,7 +232,7 @@ object tank {
 		if(cooldown == false) {
 			cooldown = true
 			game.schedule(1000, {cooldown = false})
-			const bala = new Municion()
+			const bala = new Municion(position = self.position())
 			game.addVisual(bala)
 			if (imagen == "tankup_verde.png") {
 				bala.goup()
@@ -248,9 +249,15 @@ object tank {
 			}
 			game.whenCollideDo(bala, { elemento =>
 				elemento.colision()
+				game.removeTickEvent("trayecto")
+				game.removeVisual(bala)
 			})
 		}
 		
+	}
+	
+	method colision(){
+		juego.ganoP2()
 	}
 
 }
@@ -285,7 +292,7 @@ object tank2 {
 		if(cooldown == false) {
 			cooldown = true
 			game.schedule(1000, {cooldown = false})
-			const bala2 = new Municion2()
+			const bala2 = new Municion(position = self.position())
 			game.addVisual(bala2)
 			if (imagen == "tankup_red.png") {
 				bala2.goup()
@@ -301,46 +308,22 @@ object tank2 {
 				game.onTick(100, "trayecto2", { bala2.goleft()})
 			}
 			game.whenCollideDo(bala2, { elemento =>
+				elemento.colision()
 				game.removeTickEvent("trayecto2")
 				game.removeVisual(bala2)
-				juego.ganoP2()
 			})
 		}
 	}
 	
 	method colision(){
-				juego.ganoP1()
+		juego.ganoP1()
 	}
 
 }
 
 class Municion {
 
-	var property position = tank.position()
-
-	method image() = "bullet.png"
-
-	method goup() {
-		position = position.up(1)
-	}
-
-	method godown() {
-		position = position.down(1)
-	}
-
-	method goright() {
-		position = position.right(1)
-	}
-
-	method goleft() {
-		position = position.left(1)
-	}
-
-}
-
-class Municion2 {
-
-	var property position = tank2.position()
+	var property position
 
 	method image() = "bullet.png"
 
