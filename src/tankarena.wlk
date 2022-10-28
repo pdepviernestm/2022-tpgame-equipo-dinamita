@@ -223,6 +223,7 @@ object tank {
 	var property imagen = "tankup_verde.png"
 	var property position = game.origin()
 	var cooldown = false
+	var balas = []
 	
 	method image() = imagen
 
@@ -233,6 +234,7 @@ object tank {
 			cooldown = true
 			game.schedule(1000, {cooldown = false})
 			const bala = new Municion(position = self.position())
+			balas.add(bala)
 			game.addVisual(bala)
 			if (imagen == "tankup_verde.png") {
 				bala.goup()
@@ -249,8 +251,11 @@ object tank {
 			}
 			game.whenCollideDo(bala, { elemento =>
 				elemento.colision()
-				game.removeTickEvent("trayecto")
-				game.removeVisual(bala)
+				balas.forEach{bala => 
+					game.removeVisual(bala)
+					game.removeTickEvent("trayecto")
+				}
+				balas.clear()
 			})
 		}
 		
@@ -267,6 +272,7 @@ object tank2 {
 	var property imagen = "tankup_red.png"
 	var property position = game.origin()
 	var cooldown = false
+	var balas = []
 	
 	method image() = imagen
 
@@ -293,7 +299,8 @@ object tank2 {
 			cooldown = true
 			game.schedule(1000, {cooldown = false})
 			const bala2 = new Municion(position = self.position())
-			game.addVisual(bala2)
+			balas.add(bala2)
+			game.addVisual(bala2)	
 			if (imagen == "tankup_red.png") {
 				bala2.goup()
 				game.onTick(100, "trayecto2", { bala2.goup()})
@@ -309,8 +316,11 @@ object tank2 {
 			}
 			game.whenCollideDo(bala2, { elemento =>
 				elemento.colision()
-				game.removeTickEvent("trayecto2")
-				game.removeVisual(bala2)
+				balas.forEach{bala => 
+					game.removeVisual(bala)
+					game.removeTickEvent("trayecto2")
+				}
+				balas.clear()
 			})
 		}
 	}
