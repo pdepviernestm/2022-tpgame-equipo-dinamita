@@ -247,9 +247,7 @@ object tank {
 				game.onTick(100, "trayecto", { bala.goleft()})
 			}
 			game.whenCollideDo(bala, { elemento =>
-				game.removeTickEvent("trayecto")
-				game.removeVisual(bala)
-				juego.ganoP1()
+				elemento.colision()
 			})
 		}
 		
@@ -308,6 +306,10 @@ object tank2 {
 				juego.ganoP2()
 			})
 		}
+	}
+	
+	method colision(){
+				juego.ganoP1()
 	}
 
 }
