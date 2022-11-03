@@ -251,9 +251,9 @@ object tank {
 					juego.ganoP1()
 				}
 			})
-			game.schedule(2000, { game.removeVisual(bala)
-				game.removeTickEvent("trayecto")
+			game.schedule(2000, { game.removeTickEvent("trayecto")
 				game.removeTickEvent("impacto")
+				game.removeVisual(bala)
 				bala.position(game.origin())
 				cooldown = false
 			})
@@ -261,13 +261,13 @@ object tank {
 	}
 
 	method colisionPared() {
-		if (self.position().y() == (20)) {
+		if (self.position().y() == (21)) {
 			position = position.down(1)
-		} else if (self.position().y() == (-1)) {
+		} else if (self.position().y() == (0)) {
 			position = position.up(1)
-		} else if (self.position().x() == (-1)) {
+		} else if (self.position().x() == (0)) {
 			position = position.right(1)
-		} else if (self.position().x() == (37)) {
+		} else if (self.position().x() == (38)) {
 			position = position.left(1)
 		}
 	}
@@ -320,9 +320,11 @@ object tank2 {
 					juego.ganoP2()
 				}
 			})
-			game.schedule(2000, { game.removeVisual(bala2)
-				game.removeTickEvent("trayecto2")
+			game.schedule(2000, { game.removeTickEvent("trayecto2")
 				game.removeTickEvent("impacto2")
+				game.removeVisual(bala2)
+				const hoyo2 = new Crater(position = bala2.position())
+				game.addVisual(hoyo2)
 				bala2.position(game.origin())
 				cooldown = false
 			})
@@ -330,13 +332,13 @@ object tank2 {
 	}
 
 	method colisionPared() {
-		if (self.position().y() == (20)) {
+		if (self.position().y() == (21)) {
 			position = position.down(1)
-		} else if (self.position().y() == (-1)) {
+		} else if (self.position().y() == (0)) {
 			position = position.up(1)
-		} else if (self.position().x() == (-1)) {
+		} else if (self.position().x() == (0)) {
 			position = position.right(1)
-		} else if (self.position().x() == (37)) {
+		} else if (self.position().x() == (38)) {
 			position = position.left(1)
 		}
 	}
@@ -368,6 +370,14 @@ class Municion {
 	method colisionPared() {
 		game.removeVisual(self)
 	}
+
+}
+
+class Crater {
+
+	var property position
+
+	method image() = "crater.png"
 
 }
 
