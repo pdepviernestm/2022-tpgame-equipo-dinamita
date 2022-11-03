@@ -131,7 +131,7 @@ object juego {
 
 object ganador1 {
 
-	method position() = game.center()
+	method position() = game.at(12, 0)
 
 	method text() = "Gano el jugador 1"
 
@@ -139,7 +139,7 @@ object ganador1 {
 
 object ganador2 {
 
-	method position() = game.center()
+	method position() = game.at(20, 0)
 
 	method text() = "Gano el jugador 2"
 
@@ -176,7 +176,7 @@ object contador1 {
 		game.addVisual(self)
 	}
 
-	method position() = game.at(2, 19)
+	method position() = game.at(2, 0)
 
 	method text() = "Score P1 = " + puntos.toString()
 
@@ -194,7 +194,7 @@ object contador2 {
 		game.addVisual(self)
 	}
 
-	method position() = game.at(35, 19)
+	method position() = game.at(35, 0)
 
 	method text() = "Score P2 = " + puntos.toString()
 
