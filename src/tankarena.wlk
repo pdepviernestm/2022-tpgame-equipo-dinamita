@@ -48,21 +48,37 @@ object juego {
 
 	method configurarTeclas() {
 		// TECLAS DE DIRECCION
-		keyboard.up().onPressDo({ tank.imagen("tankup_verde.png")})
-		keyboard.down().onPressDo({ tank.imagen("tankdown_verde.png")})
-		keyboard.left().onPressDo({ tank.imagen("tankleft_verde.png")})
-		keyboard.right().onPressDo({ tank.imagen("tankright_verde.png")})
+		keyboard.up().onPressDo({ tank.imagen("tankup_verde.png")
+			tank.goup()
+			tank.colisionPared()
+		})
+		keyboard.down().onPressDo({ tank.imagen("tankdown_verde.png")
+			tank.godown()
+			tank.colisionPared()
+		})
+		keyboard.left().onPressDo({ tank.imagen("tankleft_verde.png")
+			tank.goleft()
+			tank.colisionPared()
+		})
+		keyboard.right().onPressDo({ tank.imagen("tankright_verde.png")
+			tank.goright()
+			tank.colisionPared()
+		})
 		keyboard.w().onPressDo({ tank2.imagen("tankup_red.png")
 			tank2.goup()
+			tank2.colisionPared()
 		})
 		keyboard.s().onPressDo({ tank2.imagen("tankdown_red.png")
 			tank2.godown()
+			tank2.colisionPared()
 		})
 		keyboard.a().onPressDo({ tank2.imagen("tankleft_red.png")
 			tank2.goleft()
+			tank2.colisionPared()
 		})
 		keyboard.d().onPressDo({ tank2.imagen("tankright_red.png")
 			tank2.goright()
+			tank2.colisionPared()
 		})
 		keyboard.space().onPressDo({ tank.disparo()})
 		keyboard.f().onPressDo({ tank2.disparo()})
@@ -70,7 +86,7 @@ object juego {
 
 	method iniciar() {
 		game.removeVisual(inicio)
-		game.addVisualCharacter(tank)
+		game.addVisual(tank)
 		game.addVisual(tank2)
 		game.addVisual(contador1)
 		game.addVisual(contador2)
@@ -197,6 +213,22 @@ object tank {
 
 	method image() = imagen
 
+	method goup() {
+		position = position.up(1)
+	}
+
+	method godown() {
+		position = position.down(1)
+	}
+
+	method goright() {
+		position = position.right(1)
+	}
+
+	method goleft() {
+		position = position.left(1)
+	}
+
 	method disparo() {
 		if (not cooldown) {
 			cooldown = true
@@ -215,26 +247,28 @@ object tank {
 				bala.goleft()
 				game.onTick(100, "trayecto", { bala.goleft()})
 			}
-			game.onTick(100, "impacto2", { if (bala.position() == tank2.position()) {
+			game.onTick(100, "impacto", { if (bala.position() == tank2.position()) {
 					juego.ganoP1()
 				}
 			})
-			game.schedule(1000, { cooldown = false
-				game.removeVisual(bala)
+			game.schedule(2000, { game.removeVisual(bala)
 				game.removeTickEvent("trayecto")
+				game.removeTickEvent("impacto")
+				bala.position(game.origin())
+				cooldown = false
 			})
 		}
 	}
 
 	method colisionPared() {
-		if (imagen == "tankup_verde.png") {
+		if (self.position().y() == (20)) {
 			position = position.down(1)
-		} else if (imagen == "tankdown_verde.png") {
+		} else if (self.position().y() == (-1)) {
 			position = position.up(1)
-		} else if (imagen == "tankright_verde.png") {
-			position = position.left(1)
-		} else {
+		} else if (self.position().x() == (-1)) {
 			position = position.right(1)
+		} else if (self.position().x() == (37)) {
+			position = position.left(1)
 		}
 	}
 
@@ -286,23 +320,24 @@ object tank2 {
 					juego.ganoP2()
 				}
 			})
-			game.schedule(1000, { cooldown = false
-				game.removeVisual(bala2)
+			game.schedule(2000, { game.removeVisual(bala2)
 				game.removeTickEvent("trayecto2")
 				game.removeTickEvent("impacto2")
+				bala2.position(game.origin())
+				cooldown = false
 			})
 		}
 	}
 
 	method colisionPared() {
-		if (imagen == "tankup_red.png") {
-			self.godown()
-		} else if (imagen == "tankdown_red.png") {
-			self.goup()
-		} else if (imagen == "tankright_red.png") {
-			self.goleft()
-		} else {
-			self.goright()
+		if (self.position().y() == (20)) {
+			position = position.down(1)
+		} else if (self.position().y() == (-1)) {
+			position = position.up(1)
+		} else if (self.position().x() == (-1)) {
+			position = position.right(1)
+		} else if (self.position().x() == (37)) {
+			position = position.left(1)
 		}
 	}
 
