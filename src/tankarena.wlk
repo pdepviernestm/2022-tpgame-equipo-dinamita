@@ -167,7 +167,7 @@ object contador1 {
 		game.addVisual(self)
 	}
 
-	method position() = game.at(35, 0)
+	method position() = game.at(2, 0)
 
 	method text() = "Score P1 = " + puntos.toString()
 
@@ -185,7 +185,7 @@ object contador2 {
 		game.addVisual(self)
 	}
 
-	method position() = game.at(2, 0)
+	method position() = game.at(35, 0)
 
 	method text() = "Score P2 = " + puntos.toString()
 
@@ -248,7 +248,7 @@ object tank {
 					juego.ganoP1()
 				}
 			})
-			game.schedule(2000, { game.removeTickEvent("trayecto")
+			game.schedule(1000, { game.removeTickEvent("trayecto")
 				game.removeTickEvent("impacto")
 				game.removeVisual(bala)
 				const cratersound = game.sound("crater.mp3")
@@ -324,7 +324,7 @@ object tank2 {
 					juego.ganoP2()
 				}
 			})
-			game.schedule(2000, { game.removeTickEvent("trayecto2")
+			game.schedule(1000, { game.removeTickEvent("trayecto2")
 				game.removeTickEvent("impacto2")
 				game.removeVisual(bala2)
 				const cratersound = game.sound("crater.mp3")
