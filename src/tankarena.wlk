@@ -42,7 +42,6 @@ object juego {
 			const borde = new Borde(position = game.at(i - 1, 21))
 			game.addVisual(borde)
 		})
-		game.addVisual(inicio)
 		game.addVisual(new Borde(position = game.origin()))
 	}
 
@@ -85,13 +84,20 @@ object juego {
 	}
 
 	method iniciar() {
-		game.removeVisual(inicio)
 		game.addVisual(tank)
 		game.addVisual(tank2)
 		game.addVisual(contador1)
 		game.addVisual(contador2)
 		game.whenCollideDo(tank, { elemento => self.ganoP2()})
 		game.whenCollideDo(tank2, { elemento => self.ganoP1()})
+		game.schedule(2000, { self.iniciarmusica()})
+	}
+
+	method iniciarmusica() {
+		const ambiencesound = game.sound("ambience.mp3")
+		ambiencesound.shouldLoop(true)
+		ambiencesound.volume(0.8)
+		ambiencesound.play()
 	}
 
 	method reiniciar() {
@@ -105,6 +111,9 @@ object juego {
 		contador1.incrementar()
 		game.addVisual(ganador1)
 		game.removeVisual(tank2)
+		const explosionsound = game.sound("explosion.mp3")
+		explosionsound.volume(0.3)
+		explosionsound.play()
 		const boom = new Explosion(position = tank2.position())
 		game.addVisual(boom)
 		game.schedule(2000, { game.removeVisual(ganador1)
@@ -118,6 +127,9 @@ object juego {
 		contador2.incrementar()
 		game.addVisual(ganador2)
 		game.removeVisual(tank)
+		const explosionsound = game.sound("explosion.mp3")
+		explosionsound.volume(0.3)
+		explosionsound.play()
 		const boom = new Explosion(position = tank.position())
 		game.addVisual(boom)
 		game.schedule(2000, { game.removeVisual(ganador2)
@@ -155,7 +167,7 @@ object contador1 {
 		game.addVisual(self)
 	}
 
-	method position() = game.at(2, 0)
+	method position() = game.at(35, 0)
 
 	method text() = "Score P1 = " + puntos.toString()
 
@@ -173,7 +185,7 @@ object contador2 {
 		game.addVisual(self)
 	}
 
-	method position() = game.at(35, 0)
+	method position() = game.at(2, 0)
 
 	method text() = "Score P2 = " + puntos.toString()
 
@@ -215,6 +227,8 @@ object tank {
 	method disparo() {
 		if (not cooldown) {
 			cooldown = true
+			const canonsound = game.sound("canon.mp3")
+			canonsound.play()
 			const bala = new Municion(position = self.position())
 			game.addVisual(bala)
 			if (imagen == "tankup_verde.png") {
@@ -237,6 +251,9 @@ object tank {
 			game.schedule(2000, { game.removeTickEvent("trayecto")
 				game.removeTickEvent("impacto")
 				game.removeVisual(bala)
+				const cratersound = game.sound("crater.mp3")
+				cratersound.volume(0.4)
+				cratersound.play()
 				const hoyo = new Crater(position = bala.position())
 				game.addVisual(hoyo)
 				bala.position(game.origin())
@@ -286,6 +303,8 @@ object tank2 {
 	method disparo() {
 		if (not cooldown) {
 			cooldown = true
+			const canonsound = game.sound("canon.mp3")
+			canonsound.play()
 			const bala2 = new Municion(position = self.position())
 			game.addVisual(bala2)
 			if (imagen == "tankup_red.png") {
@@ -308,6 +327,9 @@ object tank2 {
 			game.schedule(2000, { game.removeTickEvent("trayecto2")
 				game.removeTickEvent("impacto2")
 				game.removeVisual(bala2)
+				const cratersound = game.sound("crater.mp3")
+				cratersound.volume(0.4)
+				cratersound.play()
 				const hoyo = new Crater(position = bala2.position())
 				game.addVisual(hoyo)
 				bala2.position(game.origin())
@@ -373,3 +395,4 @@ class Explosion {
 	method image() = "explosion.gif"
 
 }
+
