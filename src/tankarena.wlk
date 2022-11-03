@@ -145,27 +145,6 @@ object ganador2 {
 
 }
 
-// Intente usar clases, pero me da problemas la variable "puntos" en text
-/*
- * class Contador {
- * 	var property puntos = 0
- * 	var position
- * 	var text
- * 	var textColor
- * 	
- * 	method incrementar() { 
- * 		game.removeVisual(self)
- * 		puntos += 1
- * 		game.addVisual(self)
- * 	}
- * }
-
- * const contador1 = new Contador(
- * 	position = game.at(2,19), 
- * 	text = "Score P1 = " + self.puntos(),
- * 	textColor = paleta.verde()
- * )
- */
 object contador1 {
 
 	var puntos = 0
@@ -206,14 +185,6 @@ object paleta {
 
 	const property verde = "00FF00FF"
 	const property rojo = "FF0000FF"
-
-}
-
-object inicio {
-
-	method position() = game.center()
-
-	method text() = "Toca I para comenzar la partida"
 
 }
 
@@ -402,4 +373,3 @@ class Explosion {
 	method image() = "explosion.gif"
 
 }
-
