@@ -90,6 +90,8 @@ object juego {
 		game.addVisual(tank2)
 		game.addVisual(contador1)
 		game.addVisual(contador2)
+		game.whenCollideDo(tank, { elemento => self.ganoP2()})
+		game.whenCollideDo(tank2, { elemento => self.ganoP1()})
 	}
 
 	method reiniciar() {
@@ -102,17 +104,27 @@ object juego {
 	method ganoP1() {
 		contador1.incrementar()
 		game.addVisual(ganador1)
-		game.schedule(2000, { game.removeVisual(ganador1)})
-		tank2.imagen("explosion.gif")
-		game.schedule(2000, { self.reiniciar()})
+		game.removeVisual(tank2)
+		const boom = new Explosion(position = tank2.position())
+		game.addVisual(boom)
+		game.schedule(2000, { game.removeVisual(ganador1)
+			game.removeVisual(boom)
+			self.reiniciar()
+			game.addVisual(tank2)
+		})
 	}
 
 	method ganoP2() {
 		contador2.incrementar()
 		game.addVisual(ganador2)
-		game.schedule(2000, { game.removeVisual(ganador2)})
-		tank.imagen("explosion.gif")
-		game.schedule(2000, { self.reiniciar()})
+		game.removeVisual(tank)
+		const boom = new Explosion(position = tank.position())
+		game.addVisual(boom)
+		game.schedule(2000, { game.removeVisual(ganador2)
+			game.removeVisual(boom)
+			self.reiniciar()
+			game.addVisual(tank)
+		})
 	}
 
 }
@@ -254,6 +266,8 @@ object tank {
 			game.schedule(2000, { game.removeTickEvent("trayecto")
 				game.removeTickEvent("impacto")
 				game.removeVisual(bala)
+				const hoyo = new Crater(position = bala.position())
+				game.addVisual(hoyo)
 				bala.position(game.origin())
 				cooldown = false
 			})
@@ -323,8 +337,8 @@ object tank2 {
 			game.schedule(2000, { game.removeTickEvent("trayecto2")
 				game.removeTickEvent("impacto2")
 				game.removeVisual(bala2)
-				const hoyo2 = new Crater(position = bala2.position())
-				game.addVisual(hoyo2)
+				const hoyo = new Crater(position = bala2.position())
+				game.addVisual(hoyo)
 				bala2.position(game.origin())
 				cooldown = false
 			})
@@ -378,6 +392,14 @@ class Crater {
 	var property position
 
 	method image() = "crater.png"
+
+}
+
+class Explosion {
+
+	var property position
+
+	method image() = "explosion.gif"
 
 }
 
