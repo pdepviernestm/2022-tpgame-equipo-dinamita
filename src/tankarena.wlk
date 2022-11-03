@@ -31,7 +31,7 @@ object juego {
 			game.addVisual(borde)
 		})
 		23.times({ i =>
-			const borde = new Borde(position = game.at(37, i - 1))
+			const borde = new Borde(position = game.at(38, i - 1))
 			game.addVisual(borde)
 		})
 		39.times({ i =>
@@ -39,7 +39,7 @@ object juego {
 			game.addVisual(borde)
 		})
 		39.times({ i =>
-			const borde = new Borde(position = game.at(i - 1, 20))
+			const borde = new Borde(position = game.at(i - 1, 21))
 			game.addVisual(borde)
 		})
 		game.addVisual(inicio)
@@ -64,8 +64,8 @@ object juego {
 		keyboard.d().onPressDo({ tank2.imagen("tankright_red.png")
 			tank2.goright()
 		})
-		keyboard.enter().onPressDo({ tank.disparo()})
-		keyboard.space().onPressDo({ tank2.disparo()})
+		keyboard.space().onPressDo({ tank.disparo()})
+		keyboard.f().onPressDo({ tank2.disparo()})
 	}
 
 	method iniciar() {
@@ -77,8 +77,8 @@ object juego {
 	}
 
 	method reiniciar() {
-		tank.position(game.origin())
-		tank2.position(game.origin())
+		tank.position(game.at(23, 10))
+		tank2.position(game.at(7, 10))
 		tank.imagen("tankup_verde.png")
 		tank2.imagen("tankup_red.png")
 	}
@@ -192,9 +192,8 @@ object inicio {
 object tank {
 
 	var property imagen = "tankup_verde.png"
-	var property position = game.at(7, 10)
+	var property position = game.at(23, 10)
 	var cooldown = false
-	const balas = []
 
 	method image() = imagen
 
@@ -202,7 +201,6 @@ object tank {
 		if (not cooldown) {
 			cooldown = true
 			const bala = new Municion(position = self.position())
-			balas.add(bala)
 			game.addVisual(bala)
 			if (imagen == "tankup_verde.png") {
 				bala.goup()
@@ -217,16 +215,15 @@ object tank {
 				bala.goleft()
 				game.onTick(100, "trayecto", { bala.goleft()})
 			}
+			game.onTick(100, "impacto2", { if (bala.position() == tank2.position()) {
+					juego.ganoP1()
+				}
+			})
 			game.schedule(1000, { cooldown = false
 				game.removeVisual(bala)
 				game.removeTickEvent("trayecto")
 			})
 		}
-	}
-
-	method colision() {
-		tank2.eliminarBalas()
-		juego.ganoP2()
 	}
 
 	method colisionPared() {
@@ -246,9 +243,8 @@ object tank {
 object tank2 {
 
 	var property imagen = "tankup_red.png"
-	var property position = game.at(14, 10)
+	var property position = game.at(7, 10)
 	var cooldown = false
-	const balas = []
 
 	method image() = imagen
 
@@ -286,22 +282,15 @@ object tank2 {
 				bala2.goleft()
 				game.onTick(100, "trayecto2", { bala2.goleft()})
 			}
+			game.onTick(100, "impacto2", { if (bala2.position() == tank.position()) {
+					juego.ganoP2()
+				}
+			})
 			game.schedule(1000, { cooldown = false
 				game.removeVisual(bala2)
 				game.removeTickEvent("trayecto2")
+				game.removeTickEvent("impacto2")
 			})
-		}
-	}
-
-	method colision() {
-		self.eliminarBalas()
-		juego.ganoP1()
-	}
-
-	method eliminarBalas() {
-		if (not balas.isEmpty()) {
-			balas.forEach{ bala => bala.colisionPared()}
-			balas.clear()
 		}
 	}
 
