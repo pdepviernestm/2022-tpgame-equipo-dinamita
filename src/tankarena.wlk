@@ -139,7 +139,7 @@ object ganador1 {
 
 object ganador2 {
 
-	method position() = game.at(20, 0)
+	method position() = game.at(22, 0)
 
 	method text() = "Gano el jugador 2"
 
