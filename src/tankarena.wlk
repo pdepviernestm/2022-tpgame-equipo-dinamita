@@ -5,9 +5,11 @@ class Borde{
 	var property position
 	method image() = "wall.png"
 	
-	method colision(){
-		
+	method inicializarColision() {
+		game.whenCollideDo(self, {element => element.colisionPared()} )
 	}
+	method colisionPared() {}
+	method colision() {}
 }
 
 object juego {
@@ -25,22 +27,28 @@ object juego {
 		
 		23.times({i=> 
 			const borde = new Borde(position = game.at(0, i-1))
-			game.addVisual(borde)		
+			game.addVisual(borde)
+			borde.inicializarColision()		
 		})
 		23.times({i=> 
 			const borde = new Borde(position = game.at(38, i-1))
-			game.addVisual(borde)		
+			game.addVisual(borde)	
+			borde.inicializarColision()		
 		})		
 		39.times({i=> 
 			const borde = new Borde(position = game.at(i-1, 0))
-			game.addVisual(borde)		
+			game.addVisual(borde)	
+			borde.inicializarColision()		
 		})	
 		39.times({i=> 
 			const borde = new Borde(position = game.at(i-1, 21))
-			game.addVisual(borde)		
+			game.addVisual(borde)
+			borde.inicializarColision()			
 		})		
 
 		game.addVisual(inicio)
+		
+		game.addVisual(new Borde(position = game.origin()))
 	}
 
 	method configurarTeclas() {
@@ -97,8 +105,6 @@ object juego {
 		tank.imagen("explosion.gif")
 		game.schedule(2000, {self.reiniciar()})
 	}
-	
-
 }
 
 object ganador1 {
@@ -176,7 +182,7 @@ object inicio {
 object tank {
 
 	var property imagen = "tankup_verde.png"
-	var property position = game.origin()
+	var property position = game.at(7,10)
 	var cooldown = false
 	const balas = []
 	
@@ -222,12 +228,25 @@ object tank {
 			balas.clear()
 		}
 	}
+	
+	method colisionPared() {
+		if (imagen == "tankup_verde.png") {
+				position = position.down(1)
+			} else if (imagen == "tankdown_verde.png") {
+				position = position.up(1)
+			} else if (imagen == "tankright_verde.png") {
+				position = position.left(1)
+			} else {
+				position = position.right(1)
+			}
+	}
+	
 }
 
 object tank2 {
 
 	var property imagen = "tankup_red.png"
-	var property position = game.origin()
+	var property position = game.at(14,10)
 	var cooldown = false
 	const balas = []
 	
@@ -288,6 +307,18 @@ object tank2 {
 			balas.clear()
 		}
 	}
+	
+	method colisionPared() {
+		if (imagen == "tankup_red.png") {
+				self.godown()
+			} else if (imagen == "tankdown_red.png") {
+				self.goup()
+			} else if (imagen == "tankright_red.png") {
+				self.goleft()
+			} else {
+				self.goright()
+			}
+	}
 
 }
 
@@ -312,5 +343,8 @@ class Municion {
 	method goleft() {
 		position = position.left(1)
 	}
+	
+	method colisionPared() { game.removeVisual(self) }
 
 }
+
