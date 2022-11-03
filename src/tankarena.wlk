@@ -42,7 +42,6 @@ object juego {
 			const borde = new Borde(position = game.at(i - 1, 21))
 			game.addVisual(borde)
 		})
-		game.addVisual(inicio)
 		game.addVisual(new Borde(position = game.origin()))
 	}
 
@@ -85,7 +84,6 @@ object juego {
 	}
 
 	method iniciar() {
-		game.removeVisual(inicio)
 		game.addVisual(tank)
 		game.addVisual(tank2)
 		game.addVisual(contador1)
@@ -95,8 +93,8 @@ object juego {
 	}
 
 	method reiniciar() {
-		tank.position(game.at(23, 10))
-		tank2.position(game.at(7, 10))
+		tank.position(game.at(7, 10))
+		tank2.position(game.at(23, 10))
 		tank.imagen("tankup_verde.png")
 		tank2.imagen("tankup_red.png")
 	}
@@ -191,7 +189,7 @@ object paleta {
 object tank {
 
 	var property imagen = "tankup_verde.png"
-	var property position = game.at(23, 10)
+	var property position = game.at(7, 10)
 	var cooldown = false
 
 	method image() = imagen
@@ -262,7 +260,7 @@ object tank {
 object tank2 {
 
 	var property imagen = "tankup_red.png"
-	var property position = game.at(7, 10)
+	var property position = game.at(23, 10)
 	var cooldown = false
 
 	method image() = imagen
