@@ -1,0 +1,10 @@
+import wollok.game.*
+import tankarena.*
+
+program tankarena {
+	juego.configurar()
+	juego.iniciarMapa()
+	juego.configurarTeclas()
+	juego.iniciar()
+	game.start()
+}
